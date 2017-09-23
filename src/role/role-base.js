@@ -417,7 +417,7 @@ const roleBase = {
    * @param creep @type {Creep}
    * @param targets{[]}
    */
-  findClosestStorageThatNeedsEnergy(creep :Creep, targets){
+  findClosestStorageThatNeedsEnergy(creep, targets){
     return creep.pos.findClosestByRange(targets, {
       filter: function (target) {
         return (target.structureType == STRUCTURE_STORAGE && taskManager.storageNeedsEnergy(creep));
