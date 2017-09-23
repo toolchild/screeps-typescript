@@ -10,4 +10,8 @@ interface Memory {
   log: any;
 }
 
+interface Creep {
+  hi: number;
+}
+
 declare const __REVISION__: string
