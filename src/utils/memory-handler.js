@@ -3,7 +3,7 @@
  */
 
 
-const memoryHandler = {
+export default memoryHandler = {
 
   memoryNeedsUpdate: false,
 
@@ -31,6 +31,3 @@ const memoryHandler = {
 
   }
 };
-
-module.exports = memoryHandler;
-

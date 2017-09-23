@@ -1,4 +1,4 @@
-const roleCollector = require('../role/role.collector');
+import roleCollector from '../role/role.collector';
 const roleMiner = require('../role/role.miner');
 const roleUpgrader = require('../role/role.upgrader');
 const roleClaimer = require('../role/role.claimer');
@@ -12,7 +12,7 @@ const _ = require('lodash');
 
 const roomCapacity = Memory.home == null ? Game.spawns['Spawn1'].room.energyCapacityAvailable : Memory.home.room.energyCapacityAvailable;
 
-const creepManager = {
+export default creepManager = {
 
   targetRoom: '',
 
@@ -338,6 +338,3 @@ const creepManager = {
   },
 
 };
-
-module.exports = creepManager;
-

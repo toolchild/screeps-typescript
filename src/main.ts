@@ -1,11 +1,11 @@
-const roleTower = require('./role/role.tower');
-const memoryHandler = require("./utils/memory-handler");
-const creepManager = require("./utils/creep-manager");
+// import roleTower from './role/role.tower';
+import creepManager from './utils/creep-manager';
+import memoryHandler from './utils/memory-handler';
 
 // const tower1 = Game.getObjectById('587555c0ff22ce385737f1c7');
 // const tower2 = Game.getObjectById('58791fds9fcfae81e151c2793');
 
-module.exports.loop = function () {
+module.exports.loop = () => {
 
 //   try {
   memoryHandler.clearMemory();
