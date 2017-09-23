@@ -1,10 +1,9 @@
 
 
 var roleClaimer = {
-
-    /** @param {Creep} creep **/
-    run: function (creep) {
-        // consoleStats.log('claim: ' + creep.name + ' home ' + creep.home + ' targetRoomName: ' + creep.memory.targetRoomName + ' home: ' + creep.memory.home.home.name);
+  /** @param {Creep} creep **/
+    run(creep) {
+    // consoleStats.log('claim: ' + creep.name + ' home ' + creep.home + ' targetRoomName: ' + creep.memory.targetRoomName + ' home: ' + creep.memory.home.home.name);
 
         if (creep.room.name === creep.memory.home.room.name) {
             this.exitRoom(creep);

@@ -1,11 +1,11 @@
-import roleBase from './role-base';
+import { roleBase } from './role-base';
 
-var roleMiner = {
+export const roleMiner = {
 
   role: null, sources: null,
 
   /** @param {Creep} creep **/
-  run: function (creep) {
+  run (creep) {
     this.init(creep);
     if (!roleBase.willGoHome(this.creep)) {
       this.handleMine();
@@ -71,4 +71,3 @@ var roleMiner = {
   }
 };
 
-module.exports = roleMiner;

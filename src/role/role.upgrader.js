@@ -1,6 +1,6 @@
-import roleBase from './role-base';
+import { roleBase } from './role-base';
 
-var roleUpgrader = {
+export const roleUpgrader = {
 
     role: null,
     droppedSources: null,
@@ -40,8 +40,4 @@ var roleUpgrader = {
             }
         }
     }
-
-
 };
-
-module.exports = roleUpgrader;

@@ -1,7 +1,7 @@
-import roleBase from './role-base';
+import { roleBase } from './role-base';
 
 
-var roleRepairer = {
+export const  roleRepairer = {
 
     role: null,
     droppedSources: null,
@@ -42,8 +42,5 @@ var roleRepairer = {
             }
         }
     }
-
-
 };
 
-module.exports = roleRepairer;

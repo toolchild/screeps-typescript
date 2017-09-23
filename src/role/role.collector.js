@@ -1,6 +1,6 @@
-import roleBase from './role-base';
+import { roleBase } from './role-base';
 
-export default roleCollector = {
+export const roleCollector = {
   creep: null,
   droppedSources: null,
 

@@ -1,6 +1,6 @@
-import roleBase from './role-base';
+import { roleBase }from './role-base';
 
-const roleSweeper = {
+export const roleSweeper = {
   creep: null,
   droppedSources: null,
 
@@ -65,5 +65,3 @@ const roleSweeper = {
   },
 
 };
-
-module.exports = roleSweeper;

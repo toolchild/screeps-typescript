@@ -2,7 +2,7 @@ const taskManager = require('../utils/task-manager');
 const settings = require('../settings');
 const _ = require('lodash');
 
-const roleBase = {
+export const roleBase = {
   sources: null,
   droppedSources: null,
 
@@ -425,5 +425,3 @@ const roleBase = {
     });
   }
 };
-
-module.exports = roleBase;

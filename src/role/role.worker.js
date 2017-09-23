@@ -1,6 +1,6 @@
-import roleBase from './role-base';
+import { roleBase } from './role-base';
 
-const roleWorker = {
+export const roleWorker = {
 
     // tasks
     // 0 : handleHarvest
@@ -56,5 +56,3 @@ const roleWorker = {
         }
     },
 };
-
-module.exports = roleWorker;

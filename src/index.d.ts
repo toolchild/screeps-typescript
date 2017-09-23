@@ -14,4 +14,4 @@ interface Creep {
   hi: number;
 }
 
-declare const __REVISION__: string
+declare const __REVISION__: string;

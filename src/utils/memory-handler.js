@@ -3,7 +3,7 @@
  */
 
 
-export default memoryHandler = {
+export const memoryHandler = {
 
   memoryNeedsUpdate: false,
 

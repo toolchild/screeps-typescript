@@ -1,8 +1,8 @@
-import roleBase from './role-base';
+import { roleBase } from './role-base';
 var taskManager = require('../utils/task-manager');
 
 
-var roleLooter = {
+export const roleLooter = {
 
     role: null,
     sources: null,
@@ -163,9 +163,6 @@ var roleLooter = {
     },
 
 };
-
-module.exports = roleLooter;
-
 
 function getRandomInt(min, max) {
     min = Math.ceil(min);

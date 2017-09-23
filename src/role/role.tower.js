@@ -1,6 +1,6 @@
 const settings = require('../settings');
 
-var roleTower = {
+export const roleTower = {
 
   run: function (tower) {
     if (tower && tower.energy > 0) {
@@ -33,6 +33,4 @@ var roleTower = {
     }
   }
 
-}
-
-module.exports = roleTower;
+};

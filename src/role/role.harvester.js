@@ -1,7 +1,7 @@
-import roleBase from './role-base';
+import { roleBase }from './role-base';
 
 
-const roleWorker = {
+export const roleWorker = {
 
     role: null,
     sources: null,
@@ -61,5 +61,3 @@ const roleWorker = {
         }
     },
 };
-
-module.exports = roleWorker;

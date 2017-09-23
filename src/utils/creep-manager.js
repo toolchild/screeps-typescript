@@ -1,18 +1,18 @@
-import roleCollector from '../role/role.collector';
-const roleMiner = require('../role/role.miner');
-const roleUpgrader = require('../role/role.upgrader');
-const roleClaimer = require('../role/role.claimer');
-const roleHarvester = require('../role/role.harvester');
-const roleSweeper = require('../role/role.sweeper');
-const roleDistanceHarvester = require('../role/role.distance-harvester');
-const roleRepairer = require('../role/role.repairer');
-const settings = require('settings');
-const consts = require('../constants');
+import { roleCollector } from "../role/role.collector";
+const {roleMiner} = require('../role/role.miner');
+const {roleUpgrader} = require('../role/role.upgrader');
+const {roleClaimer} = require('../role/role.claimer');
+const {roleHarvester} = require("../role/role.harvester");
+const {roleSweeper} = require("../role/role.sweeper");
+const {roleDistanceHarvester} = require('../role/role.distance-harvester');
+const {roleRepairer} = require('../role/role.repairer');
+const {settings} = require('settings');
+const {constants} = require('../constants');
 const _ = require('lodash');
 
 const roomCapacity = Memory.home == null ? Game.spawns['Spawn1'].room.energyCapacityAvailable : Memory.home.room.energyCapacityAvailable;
 
-export default creepManager = {
+export const creepManager = {
 
   targetRoom: '',
 
@@ -22,24 +22,24 @@ export default creepManager = {
 
    log: () =>console.log(roomCapacity)(),
 
-  numH300: roomCapacity >= consts.E_LEVEL_300 && roomCapacity < consts.E_LEVEL_550 ? settings.NUM_H300 : 0,
-  numH550: roomCapacity >= consts.E_LEVEL_550 && roomCapacity < consts.E_LEVEL_800 ? settings.NUM_H550 : 0,
-  numH800: roomCapacity >= consts.E_LEVEL_800 ? settings.NUM_H800 : 0,
+  numH300: roomCapacity >= constants.E_LEVEL_300 && roomCapacity < constants.E_LEVEL_550 ? settings.NUM_H300 : 0,
+  numH550: roomCapacity >= constants.E_LEVEL_550 && roomCapacity < constants.E_LEVEL_800 ? settings.NUM_H550 : 0,
+  numH800: roomCapacity >= constants.E_LEVEL_800 ? settings.NUM_H800 : 0,
 
-  numM0250: roomCapacity >= consts.E_LEVEL_250 && roomCapacity < consts.E_LEVEL_550 ? settings.NUM_M0250 : 0,
-  numM1250: roomCapacity >= consts.E_LEVEL_250 && roomCapacity < consts.E_LEVEL_550 ? settings.NUM_M1250 : 0,
-  numM0550: roomCapacity >= consts.E_LEVEL_550 ? settings.NUM_M0550 : 0,
-  numM1550: roomCapacity >= consts.E_LEVEL_550 ? settings.NUM_M1550 : 0,
+  numM0250: roomCapacity >= constants.E_LEVEL_250 && roomCapacity < constants.E_LEVEL_550 ? settings.NUM_M0250 : 0,
+  numM1250: roomCapacity >= constants.E_LEVEL_250 && roomCapacity < constants.E_LEVEL_550 ? settings.NUM_M1250 : 0,
+  numM0550: roomCapacity >= constants.E_LEVEL_550 ? settings.NUM_M0550 : 0,
+  numM1550: roomCapacity >= constants.E_LEVEL_550 ? settings.NUM_M1550 : 0,
 
-  numC250: roomCapacity >= consts.E_LEVEL_250 && roomCapacity < consts.E_LEVEL_550 ? settings.NUM_Col250 : 0,
-  numC550: roomCapacity >= consts.E_LEVEL_550 && roomCapacity < consts.E_LEVEL_750 ? settings.NUM_Col550 : 0,
-  numC750: roomCapacity >= consts.E_LEVEL_750 && roomCapacity < consts.E_LEVEL_1300 ? settings.NUM_Col750 : 0,
-  numC1300: roomCapacity >= consts.E_LEVEL_1300 ? settings.NUM_Col1300 : 0,
+  numC250: roomCapacity >= constants.E_LEVEL_250 && roomCapacity < constants.E_LEVEL_550 ? settings.NUM_Col250 : 0,
+  numC550: roomCapacity >= constants.E_LEVEL_550 && roomCapacity < constants.E_LEVEL_750 ? settings.NUM_Col550 : 0,
+  numC750: roomCapacity >= constants.E_LEVEL_750 && roomCapacity < constants.E_LEVEL_1300 ? settings.NUM_Col750 : 0,
+  numC1300: roomCapacity >= constants.E_LEVEL_1300 ? settings.NUM_Col1300 : 0,
 
   numUp200: 0,
-  numUp550: roomCapacity >= consts.E_LEVEL_550 && roomCapacity < consts.E_LEVEL_750 ? settings.NUM_Up550 : 0,
-  numUp750: roomCapacity >= consts.E_LEVEL_750 && roomCapacity < consts.E_LEVEL_1550 ? settings.NUM_Up750 : 0,
-  numUp1550: roomCapacity >= consts.E_LEVEL_1550 ? settings.NUM_Up1550 : 0,
+  numUp550: roomCapacity >= constants.E_LEVEL_550 && roomCapacity < constants.E_LEVEL_750 ? settings.NUM_Up550 : 0,
+  numUp750: roomCapacity >= constants.E_LEVEL_750 && roomCapacity < constants.E_LEVEL_1550 ? settings.NUM_Up750 : 0,
+  numUp1550: roomCapacity >= constants.E_LEVEL_1550 ? settings.NUM_Up1550 : 0,
 
   numDH800: settings.NUM_DH800,
   numCl100: settings.NUM_Cl100,
@@ -58,8 +58,8 @@ export default creepManager = {
 
   prepareCreepsAmounts ()  {
     this.s100 = _.filter(Game.creeps, (creep) => creep.name.startsWith('s100'));
-    this.r200 = _.filter(Game.creeps, (creep) => creep.memory.role == 'r200');
-    this.h200 = _.filter(Game.creeps, (creep) => creep.memory.role == 'h200');
+    this.r200 = _.filter(Game.creeps, (creep) => creep.memory.role === 'r200');
+    this.h200 = _.filter(Game.creeps, (creep) => creep.memory.role === 'h200');
     this.h300 = _.filter(Game.creeps, (creep) => creep.memory.role == 'h300');
     this.h550 = _.filter(Game.creeps, (creep) => creep.memory.role == 'h550');
     this.h800 = _.filter(Game.creeps, (creep) => creep.memory.role == 'h800');
@@ -78,7 +78,7 @@ export default creepManager = {
     this.up1550 = _.filter(Game.creeps, (creep) => creep.memory.role == 'up1550');
 
     this.cl100 = _.filter(Game.creeps, (creep) => creep.memory.role == 'cl100');
-    this.dH800 = _.filter(Game.creeps, (creep) => creep.memory.role == 'dH800');
+    this.dH800 = _.filter(Game.creeps, (creep) => creep.memory.role === 'dH800');
   },
   logStats ()  {
     console.log('main:Energy:' + Memory.home.room.energyAvailable + '/' + roomCapacity
