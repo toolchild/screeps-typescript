@@ -32,7 +32,8 @@ export const creepManager = {
   numM0550: roomCapacity >= constants.E_LEVEL_550 ? settings.NUM_M0550 : 0,
   numM1550: roomCapacity >= constants.E_LEVEL_550 ? settings.NUM_M1550 : 0,
 
-  numC250: roomCapacity >= constants.E_LEVEL_250 && roomCapacity < constants.E_LEVEL_550 ? settings.NUM_Col250 : 0,
+  numC250: (roomCapacity >= constants.E_LEVEL_250 && roomCapacity < constants.E_LEVEL_550)
+    || Game.spawns['Spawn1'].room.energyAvailable < constants.E_LEVEL_550 && _.filter(Game.creeps, (creep) => creep.memory.role.startsWith('c')) < 1 ? settings.NUM_Col250 : 0,
   numC550: roomCapacity >= constants.E_LEVEL_550 && roomCapacity < constants.E_LEVEL_750 ? settings.NUM_Col550 : 0,
   numC750: roomCapacity >= constants.E_LEVEL_750 && roomCapacity < constants.E_LEVEL_1300 ? settings.NUM_Col750 : 0,
   numC1300: roomCapacity >= constants.E_LEVEL_1300 ? settings.NUM_Col1300 : 0,
