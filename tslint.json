@@ -1,13 +1,26 @@
 {
-  "extends" : [
+  "extends": [
     "tslint:recommended"
   ],
   "rules": {
     "forin": false,
-    "interface-name": [false],
-    "no-console": [false],
-    "no-namespace": [true, "allow-declarations"],
-    "quotemark": [true, "single"],
+    "interface-name": [
+      false
+    ],
+    "no-console": [
+      false
+    ],
+    "no-namespace": [
+      true,
+      "allow-declarations"
+    ],
+    "quotemark": [
+      true,
+      "single"
+    ],
+    "max-line-length": [
+      false
+    ],
     "trailing-comma": [
       true,
       "never"

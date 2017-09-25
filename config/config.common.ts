@@ -31,20 +31,20 @@ export function init(options: EnvOptions): Config {
   // set all common configurations here
   config
     .entry("main")
-      .add("./src/main.ts");
+    .add("./src/main.ts");
 
   config
     .output
-      .path(path.join(ROOT, "dist", ENV))
-      .filename("main.js")
-      .pathinfo(false)
-      .libraryTarget("commonjs2")
-      .sourceMapFilename("[file].map")
-      .devtoolModuleFilenameTemplate("[resource-path]");
+    .path(path.join(ROOT, 'dist', ENV))
+    .filename('main.js')
+    .pathinfo(false)
+    .libraryTarget('commonjs2')
+    .sourceMapFilename('[file].map')
+    .devtoolModuleFilenameTemplate('[resource-path]');
 
-  config.devtool("source-map");
+  config.devtool('source-map');
 
-  config.target("node");
+  config.target('node');
 
   config.node.merge({
     Buffer: false,
@@ -59,16 +59,16 @@ export function init(options: EnvOptions): Config {
 
   config.resolve
     .extensions
-      .merge([".webpack.js", ".web.js", ".ts", ".tsx", ".js"]);
+    .merge(['.webpack.js', '.web.js', '.ts', '.tsx', '.js']);
 
   // see for more info about TsConfigPathsPlugin
   // https://github.com/s-panferov/awesome-typescript-loader/issues/402
-  config.resolve.plugin("tsConfigPaths") // name here is just an identifier
+  config.resolve.plugin('tsConfigPaths') // name here is just an identifier
     .use(TsConfigPathsPlugin);
 
   config.externals({
     // webpack will not try to rewrite require("main.js.map")
-    "main.js.map": "main.js.map",
+    'main.js.map': 'main.js.map',
   });
 
   /////////
@@ -76,13 +76,13 @@ export function init(options: EnvOptions): Config {
 
   //   NOTE: do not use 'new' on these, it will be called automatically
   // this plugin is for typescript's typeschecker to run in async mode
-  config.plugin("tsChecker")
+  config.plugin('tsChecker')
     .use(CheckerPlugin);
 
   // this plugin wipes the `dist` directory clean before each new deploy
-  config.plugin("clean")
+  config.plugin('clean')
     .use(CleanWebpackPlugin, [    // arguments passed to CleanWebpackPlugin ctor
-      [ `dist/${options.ENV}/*` ],
+      [`dist/${options.ENV}/*`],
       { root: options.ROOT },
     ]);
 
@@ -95,61 +95,61 @@ export function init(options: EnvOptions): Config {
   //   JSON.stringify('production').
   // Make sure to let typescript know about these via `define` !
   // See https://github.com/kurttheviking/git-rev-sync-js for more git options
-  config.plugin("define")
+  config.plugin('define')
     .use((webpack.DefinePlugin as Config.PluginClass), [{
       PRODUCTION: JSON.stringify(true),
       __BUILD_TIME__: JSON.stringify(Date.now()),  // example defination
-      __REVISION__: gitRepoExists ? JSON.stringify(git.short()) : JSON.stringify(""),
+      __REVISION__: gitRepoExists ? JSON.stringify(git.short()) : JSON.stringify(''),
     }]);
 
-  config.plugin("screeps-source-map")
+  config.plugin('screeps-source-map')
     .use((ScreepsSourceMapToJson as Config.PluginClass));
 
-  config.plugin("no-emit-on-errors")
+  config.plugin('no-emit-on-errors')
     .use((webpack.NoEmitOnErrorsPlugin as Config.PluginClass));
 
   /////////
   /// Modules
 
-  config.module.rule("js-source-maps")
+  config.module.rule('js-source-maps')
     .test(/\.js$/)
-    .enforce("pre")
-    .use("source-map")
-      .loader("source-map-loader");
+    .enforce('pre')
+    .use('source-map')
+    .loader('source-map-loader');
 
-  config.module.rule("tsx-source-maps")
+  config.module.rule('tsx-source-maps')
     .test(/\.tsx?$/)
-    .enforce("pre")
-    .use("source-map")
-      .loader("source-map-loader");
+    .enforce('pre')
+    .use('source-map')
+    .loader('source-map-loader');
 
-  config.module.rule("compile")
-    .test(/\.tsx?$/)
-    .exclude
-      .add(path.join(ROOT, "src/snippets"))
-      .end()
-    .use("typescript")
-      .loader("awesome-typescript-loader")
-      .options({ configFileName: "tsconfig.json" });
-
-  config.module.rule("lint")
+  config.module.rule('compile')
     .test(/\.tsx?$/)
     .exclude
-      .add(path.join(ROOT, "src/snippets"))
-      .add(path.join(ROOT, "src/lib"))
-      .end()
-    .use("tslint")
-      .loader("tslint-loader")
-      .options({
-        configFile: path.join(ROOT, "tslint.json"),
-        // automaticall fix linting errors
-        fix: false,
-        // you can search NPM and install custom formatters
-        formatter: "stylish",
-        // enables type checked rules like 'for-in-array'
-        // uses tsconfig.json from current working directory
-        typeCheck: false,
-      });
+    .add(path.join(ROOT, 'src/snippets'))
+    .end()
+    .use('typescript')
+    .loader('awesome-typescript-loader')
+    .options({ configFileName: 'tsconfig.json' });
+
+  config.module.rule('lint')
+    .test(/\.tsx?$/)
+    .exclude
+    .add(path.join(ROOT, 'src/snippets'))
+    .add(path.join(ROOT, 'src/lib'))
+    .end()
+    .use('tslint')
+    .loader('tslint-loader')
+    .options({
+      configFile: path.join(ROOT, 'tslint.json'),
+      // automaticall fix linting errors
+      fix: false,
+      // you can search NPM and install custom formatters
+      formatter: 'stylish',
+      // enables type checked rules like 'for-in-array'
+      // uses tsconfig.json from current working directory
+      typeCheck: false,
+    });
 
   // return the config object
   return config;

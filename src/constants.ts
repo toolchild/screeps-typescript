@@ -1,6 +1,7 @@
 export const constants = {
   E_LEVEL_1300: 1300,
   E_LEVEL_1550: 1550,
+  E_LEVEL_200: 200,
   E_LEVEL_250: 250,
   E_LEVEL_300: 300,
   E_LEVEL_550: 550,

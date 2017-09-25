@@ -1,5 +1,5 @@
 export const settings = {
-  MIN_PICPUP_ENERGY : 1,
+  MIN_PICPUP_ENERGY: 1,
 
   NUM_Cl100: 0,
 
@@ -25,7 +25,7 @@ export const settings = {
   NUM_S100: 1,
 
   NUM_Up1550: 1,
-  NUM_Up200: 0,
+  NUM_Up200: 4,
   NUM_Up550: 4,
   NUM_Up750: 4,
 

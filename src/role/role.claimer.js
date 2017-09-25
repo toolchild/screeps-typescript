@@ -1,6 +1,6 @@
 
 
-var roleClaimer = {
+const roleClaimer = {
   /** @param {Creep} creep **/
     run(creep) {
     // consoleStats.log('claim: ' + creep.name + ' home ' + creep.home + ' targetRoomName: ' + creep.memory.targetRoomName + ' home: ' + creep.memory.home.home.name);

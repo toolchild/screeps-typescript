@@ -1,13 +1,13 @@
 import { roleCollector } from "../role/role.collector";
-const {roleMiner} = require('../role/role.miner');
-const {roleUpgrader} = require('../role/role.upgrader');
-const {roleClaimer} = require('../role/role.claimer');
-const {roleHarvester} = require("../role/role.harvester");
-const {roleSweeper} = require("../role/role.sweeper");
-const {roleDistanceHarvester} = require('../role/role.distance-harvester');
-const {roleRepairer} = require('../role/role.repairer');
-const {settings} = require('settings');
-const {constants} = require('../constants');
+const { roleMiner } = require('../role/role.miner');
+const { roleUpgrader } = require('../role/role.upgrader');
+const { roleClaimer } = require('../role/role.claimer');
+const { roleHarvester } = require("../role/role.harvester");
+const { roleSweeper } = require("../role/role.sweeper");
+const { roleDistanceHarvester } = require('../role/role.distance-harvester');
+const { roleRepairer } = require('../role/role.repairer');
+const { settings } = require('settings');
+const { constants } = require('../constants');
 const _ = require('lodash');
 
 const roomCapacity = Memory.home == null ? Game.spawns['Spawn1'].room.energyCapacityAvailable : Memory.home.room.energyCapacityAvailable;
@@ -20,13 +20,14 @@ export const creepManager = {
   numR200: settings.NUM_R200,
   numH200: settings.NUM_H200,
 
-   log: () =>console.log(roomCapacity)(),
+  log: () => console.log(roomCapacity)(),
 
   numH300: roomCapacity >= constants.E_LEVEL_300 && roomCapacity < constants.E_LEVEL_550 ? settings.NUM_H300 : 0,
   numH550: roomCapacity >= constants.E_LEVEL_550 && roomCapacity < constants.E_LEVEL_800 ? settings.NUM_H550 : 0,
   numH800: roomCapacity >= constants.E_LEVEL_800 ? settings.NUM_H800 : 0,
 
-  numM0250: roomCapacity >= constants.E_LEVEL_250 && roomCapacity < constants.E_LEVEL_550 ? settings.NUM_M0250 : 0,
+  numM0250: (roomCapacity >= constants.E_LEVEL_250 && roomCapacity < constants.E_LEVEL_550)
+    || Game.spawns['Spawn1'].room.energyAvailable < constants.E_LEVEL_550 && _.filter(Game.creeps, (creep) => creep.memory.role.startsWith('m')) < 1 ? settings.NUM_M0250 : 0,
   numM1250: roomCapacity >= constants.E_LEVEL_250 && roomCapacity < constants.E_LEVEL_550 ? settings.NUM_M1250 : 0,
   numM0550: roomCapacity >= constants.E_LEVEL_550 ? settings.NUM_M0550 : 0,
   numM1550: roomCapacity >= constants.E_LEVEL_550 ? settings.NUM_M1550 : 0,
@@ -36,7 +37,7 @@ export const creepManager = {
   numC750: roomCapacity >= constants.E_LEVEL_750 && roomCapacity < constants.E_LEVEL_1300 ? settings.NUM_Col750 : 0,
   numC1300: roomCapacity >= constants.E_LEVEL_1300 ? settings.NUM_Col1300 : 0,
 
-  numUp200: 0,
+  numUp200: roomCapacity >= constants.E_LEVEL_200 && roomCapacity < constants.E_LEVEL_550 ? settings.NUM_Up200 : 0,
   numUp550: roomCapacity >= constants.E_LEVEL_550 && roomCapacity < constants.E_LEVEL_750 ? settings.NUM_Up550 : 0,
   numUp750: roomCapacity >= constants.E_LEVEL_750 && roomCapacity < constants.E_LEVEL_1550 ? settings.NUM_Up750 : 0,
   numUp1550: roomCapacity >= constants.E_LEVEL_1550 ? settings.NUM_Up1550 : 0,
@@ -56,7 +57,7 @@ export const creepManager = {
 
   up200: null, up550: null, up750: null, up1550: null,
 
-  prepareCreepsAmounts ()  {
+  prepareCreepsAmounts() {
     this.s100 = _.filter(Game.creeps, (creep) => creep.name.startsWith('s100'));
     this.r200 = _.filter(Game.creeps, (creep) => creep.memory.role === 'r200');
     this.h200 = _.filter(Game.creeps, (creep) => creep.memory.role === 'h200');
@@ -80,7 +81,7 @@ export const creepManager = {
     this.cl100 = _.filter(Game.creeps, (creep) => creep.memory.role == 'cl100');
     this.dH800 = _.filter(Game.creeps, (creep) => creep.memory.role === 'dH800');
   },
-  logStats ()  {
+  logStats() {
     console.log('main:Energy:' + Memory.home.room.energyAvailable + '/' + roomCapacity
       + ' s100:' + this.s100.length + '/' + this.numS100
       + ' r200:' + this.h200.length + '/' + this.numR200
@@ -154,7 +155,7 @@ export const creepManager = {
 
   },
 
-  spawnHarvester (spawnError)  {
+  spawnHarvester(spawnError) {
     if (spawnError.length == null && this.h200.length < this.numH200) {
       let role = 'h200';
       spawnError = this.spawnCreep([WORK, CARRY, MOVE], role, role, this.targetRoom);
@@ -182,7 +183,7 @@ export const creepManager = {
     return spawnError;
   },
 
-  spawnMiner(spawnError){
+  spawnMiner(spawnError) {
     if (spawnError.length == null && this.m0250.length < this.numM0250) {
       let role = 'm0250';
       spawnError = this.spawnCreep([WORK, WORK, MOVE], role, role, this.targetRoom);
@@ -228,15 +229,15 @@ export const creepManager = {
     if (spawnError.length == null && this.c1300.length < this.numC1300) {
       let role = 'c1300';
       spawnError = this.spawnCreep([WORK, WORK, WORK, WORK, WORK,
-                                    CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY,
-                                    MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE], role, role, this.targetRoom);
+        CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY,
+        MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE], role, role, this.targetRoom);
       this.handleSpawnError(spawnError, role);
     }
     return spawnError;
 
   },
 
-  spawnUpgraders(spawnError)  {
+  spawnUpgraders(spawnError) {
     if (spawnError.length == null && this.up200.length < this.numUp200) {
       let role = 'up200';
       spawnError = this.spawnCreep([WORK, CARRY, MOVE], role, role, this.targetRoom);
@@ -257,14 +258,14 @@ export const creepManager = {
     if (spawnError.length == null && this.up1550.length < this.numUp1550) {
       let role = 'up1550';
       spawnError = this.spawnCreep([WORK, WORK, WORK, WORK, WORK, WORK, WORK,
-                                    CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY,
-                                    MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE], role, role, this.targetRoom);
+        CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY,
+        MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE], role, role, this.targetRoom);
       this.handleSpawnError(spawnError, role);
     }
     return spawnError;
   },
 
-  spawnCreep (body, role, name, targetRoomName)  {
+  spawnCreep(body, role, name, targetRoomName) {
     return Game.spawns['Spawn1'].createCreep(body, name + '-' + Math.floor(Math.random() * 100), {
       auto: true,
       role: role,
@@ -273,7 +274,7 @@ export const creepManager = {
     });
   },
 
-  handleCreeps () {
+  handleCreeps() {
     for (let name in Game.creeps) {
       let creep = Game.creeps[name];
       if (creep.memory.auto) {
@@ -301,11 +302,11 @@ export const creepManager = {
     }
   },
 
-  handleSpawnError(spawnError, role)  {
+  handleSpawnError(spawnError, role) {
     if (role && spawnError && !spawnError.name) {
       switch (spawnError) {
         case ERR_BUSY: {
-           console.log('spawn: ' + role + ' cannot spawn because spawn is busy')
+          console.log('spawn: ' + role + ' cannot spawn because spawn is busy')
           break;
         }
         case ERR_NOT_ENOUGH_ENERGY: {
@@ -319,10 +320,10 @@ export const creepManager = {
       }
     }
   },
-  getCreepStats ()  {
+  getCreepStats() {
     // sample data format ["Name for Stat", variableForStat]
     let spacer = '                                            max: ';
-    return[
+    return [
 
       ["m0550" + spacer + this.numM0550, this.m0550.length],
       ["m1550" + spacer + this.numM1550, this.m1550.length],

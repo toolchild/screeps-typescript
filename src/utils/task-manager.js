@@ -1,4 +1,4 @@
-const taskManager = {
+export const taskManager = {
 
   /** @param {Creep} creep
    tasks
@@ -6,7 +6,7 @@ const taskManager = {
    1 : transfer energy,
    2 : build,
    3 : upgrade*/
-  decideTask(creep){
+  decideTask(creep) {
 
     let constructionSites = creep.room.find(FIND_CONSTRUCTION_SITES);
     // consoleStats.log('task: ' + creep.name + 'cSites: ' + constructionSites);
@@ -29,19 +29,18 @@ const taskManager = {
     }
   },
 
-  towerNeedsEnergy(creep){
+  towerNeedsEnergy(creep) {
     return creep.room.find(FIND_STRUCTURES, {
-        filter: (structure) => {
-          return (structure.structureType == STRUCTURE_TOWER) && structure.energy < structure.energyCapacity * 0.6;
-        }
-      }).length > 0;
+      filter: (structure) => {
+        return (structure.structureType == STRUCTURE_TOWER) && structure.energy < structure.energyCapacity * 0.6;
+      }
+    }).length > 0;
   },
 
-  storageNeedsEnergy(creep){
+  storageNeedsEnergy(creep) {
     return creep.room.storage ? creep.room.storage.store[RESOURCE_ENERGY] < creep.room.storage.storeCapacity * 0.50 : false;
   }
 
 };
 
-module.exports = taskManager;
 
