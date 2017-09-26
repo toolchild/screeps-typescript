@@ -3,10 +3,10 @@ export const settings = {
 
   NUM_Cl100: 0,
 
-  NUM_Col1300: 3,
+  NUM_Col1300: 2,
   NUM_Col250: 2,
-  NUM_Col550: 3,
-  NUM_Col750: 3,
+  NUM_Col550: 2,
+  NUM_Col750: 2,
 
   NUM_DH800: 0,
 

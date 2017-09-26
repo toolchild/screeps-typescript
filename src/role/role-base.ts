@@ -16,9 +16,6 @@ export const roleBase = {
     }
   },
 
-  /** @param creep @type {Creep}
-   *  @param droppedSources @type {[Resource]}
-   */
   initDistance(creep: Creep, droppedSources: Resource[]) {
     this.sources = _.sortBy(creep.room.find(FIND_SOURCES), (source: Resource) => source.pos.y);
     this.droppedSources = droppedSources;
@@ -30,16 +27,11 @@ export const roleBase = {
    * 1 : transfer energy
    * 2 : build
    * 3 : upgrade
-   * @param creep @type {Creep}
    */
   decideTask(creep: Creep) {
     creep.memory.task = taskManager.decideTask(creep);
   },
 
-  /**
-   * @param creep @type {Creep}
-   * @returns  {boolean}
-   */
   willGoHome(creep: Creep) {
     if (creep.room.name !== creep.memory.home.room.name) {
       const exit = creep.room.findExitTo(creep.memory.home.room.name);
@@ -49,10 +41,6 @@ export const roleBase = {
     return false;
   },
 
-  /**
-   * @param creep @type {Creep}
-   * @returns {boolean}
-   */
   willGoTargetRoom(creep: Creep) {
     if (creep.room.name !== creep.memory.targetRoomName) {
       const exit = creep.room.findExitTo(creep.memory.targetRoomName);
@@ -67,10 +55,6 @@ export const roleBase = {
     }
   },
 
-  /**
-   * @param creep @type {Creep}
-   * @param priorityTargetIndex @type {Number}
-   */
   handleHarvest(creep: Creep, priorityTargetIndex: number) {
     if (creep.memory.targetIndex == null) {
       creep.memory.targetIndex = priorityTargetIndex == null ? 0 : priorityTargetIndex;
@@ -88,18 +72,13 @@ export const roleBase = {
     }
   },
 
-  /**
-   * @param creep @type {Creep}
-   * @param priorityTargetIndex @type {Number}
-   */
   handleDistanceHarvest(creep: Creep, priorityTargetIndex: number) {
     if (creep.pos.y < 48) {
       this.handleHarvest(creep, priorityTargetIndex);
     } else {
       creep.move(TOP);
     }
-  }
-  ,
+  },
 
   handleCollect(creep: Creep) {
 
@@ -159,9 +138,6 @@ export const roleBase = {
 
   },
 
-  /**
-   * @param creep @type {Creep}
-   */
   handleTransfer(creep: Creep) {
     let willRepairInstead = false;
     creep.memory.isBusy = true;
@@ -186,9 +162,6 @@ export const roleBase = {
     return willRepairInstead;
   },
 
-  /**
-   * @param creep @type {Creep}
-   */
   handleBuild(creep: Creep) {
     creep.memory.isBusy = true;
     const targets = creep.room.find(FIND_CONSTRUCTION_SITES);
@@ -225,9 +198,6 @@ export const roleBase = {
     }
   },
 
-  /**
-   * @param creep @type {Creep}
-   */
   handleRepair(creep: Creep) {
     creep.memory.isBusy = true;
     const closestDamagedStructure: any = creep.pos.findClosestByRange(FIND_STRUCTURES, {
@@ -253,12 +223,7 @@ export const roleBase = {
     }
   },
 
-  /**
-   * @param creep @type {Creep}
-   * @param moveError {Number}
-   * @param priorityTargetIndex {Number}
-   */
-  handleMoveError(creep: Creep, moveError: any, priorityTargetIndex: any) {
+  handleMoveError(creep: Creep, moveError: number, priorityTargetIndex: number | null) {
     switch (moveError) {
       case -11: { // tired
         // console.log('base: ' + creep.name + ' is tired.');
@@ -287,11 +252,7 @@ export const roleBase = {
     }
   },
 
-  /**
-   * @param creep @type {Creep}
-   * @param moveError {Number}
-   */
-  handleMoveErrorCollect(creep: Creep, moveError: any) {
+  handleMoveErrorCollect(creep: Creep, moveError: number) {
     switch (moveError) {
       case -11: { // tired
         // console.log('base: ' + creep.name + ' is tired.');
