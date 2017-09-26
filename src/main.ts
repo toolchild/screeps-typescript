@@ -2,10 +2,10 @@ import { roleTower } from './role/role.tower';
 import { creepManager } from './utils/creep-manager';
 import { memoryHandler } from './utils/memory-handler';
 
-const tower1 = Game.getObjectById('59c7b890fcabf14bc3bb5b0a');
-// const tower2 = Game.getObjectById('58791fds9fcfae81e151c2793');
-
 module.exports.loop = () => {
+  const towers: StructureTower[] = Game.spawns.Spawn1.room.find(FIND_MY_STRUCTURES, {
+    filter: { structureType: STRUCTURE_TOWER }
+  });
 
   //   try {
   memoryHandler.clearMemory();
@@ -13,8 +13,9 @@ module.exports.loop = () => {
   creepManager.prepareCreepsAmounts();
   creepManager.logStats();
   creepManager.respawnCreeps();
-  roleTower.run(tower1);
-  //   roleTower.run(tower2);
+  _.forEach(towers, (tower) => {
+    roleTower.run(tower);
+  });
   creepManager.handleCreeps();
   //   printStatsConsole(creepManager.getCreepStats());
   //   } catch (error) {console.log(error)}
